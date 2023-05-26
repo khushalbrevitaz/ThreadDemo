@@ -24,6 +24,10 @@ public class Demo1 {
             thread.join();
         }
         long time2= System.currentTimeMillis();
+        for (Map.Entry<String,Integer> values:uniqueWords.entrySet()){
+            System.out.println("Key = " + values.getKey() +
+                    ", Value = " + values.getValue());
+        }
         System.out.println("time "+ (time2-time1));
     }
     public static String[] partFile(String filepath,int size ){
@@ -82,10 +86,7 @@ class FileRead1 implements Runnable{
             }
 
         // Process the unique words
-        for (Map.Entry<String,Integer> values:uniqueWords.entrySet()){
-            System.out.println("Key = " + values.getKey() +
-                    ", Value = " + values.getValue());
-        }
+
     }
 }
 

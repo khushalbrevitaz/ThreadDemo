@@ -5,11 +5,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Demo3 {
-    static Map<String,Integer> mergerdMap = new HashMap<>();
+public class Demo2 {
     public static void main(String[] args) throws InterruptedException {
         long time1= System.currentTimeMillis();
         int size=4;
@@ -31,59 +30,34 @@ public class Demo3 {
         int partSize = newContent.length() / size;
         System.out.println(partSize);
         String[] fileParts = new String[size];
-
-        FileReadThread[] threads = new FileReadThread[size];
+        Map<String,Integer> uniqueWords = new ConcurrentHashMap<>();
+        Thread[] threads = new Thread[size];
         int startIndex=0;
         int endIndex=0;
-
         for (int i = 0; i < size; i++) {
-            Map<String,Integer> uniqueWords = new HashMap<>();
+
             endIndex = (i+1)*partSize;
-            if(endIndex>content.length()-1){
-                System.out.println(endIndex+" inside" + content.length());
-                endIndex=content.length();
-                System.out.println("last "+endIndex);
-            }
             while(content.toString().charAt(endIndex-1)!=' ' && endIndex<content.length()){
                 endIndex+=1;
             }
 
             fileParts[i] = content.substring(startIndex, endIndex);
-            System.out.println("end index :"+endIndex);
-            threads[i] = new FileReadThread(fileParts[i],uniqueWords);
+            System.out.println("end index :"+endIndex+1);
+            threads[i] = new Thread(new FileReadThread(fileParts[i],uniqueWords ));
             threads[i].start();
-            startIndex=endIndex+1;
-
-            System.out.println("start index : "+startIndex);
+            startIndex=endIndex;
         }
 
-
-        for (FileReadThread thread : threads) {
+        for (Thread thread : threads) {
             thread.join();
-        }
-
-        for (FileReadThread thread : threads){
-            mergeMap(mergerdMap,thread.getMap());
         }
         // Arrays.stream(threads).map(thread -> thread.join());
         long time2= System.currentTimeMillis();
-        for (Map.Entry<String,Integer> values:mergerdMap.entrySet()){
+        for (Map.Entry<String,Integer> values:uniqueWords.entrySet()){
             System.out.println(values.getKey() +
                     " : " + values.getValue());
         }
-         System.out.println("time "+ (time2-time1));
-    }
-    public static void mergeMap(Map<String,Integer> mergeMap,Map<String,Integer> smallMap){
-        for (Map.Entry<String,Integer> map: smallMap.entrySet()){
-            System.out.println("map : "+map.getKey());
-            if(mergeMap.containsKey(map.getKey())){
-                mergeMap.put(map.getKey(),(map.getValue()+mergeMap.get(map.getKey())));
-            }
-        else{
-                mergeMap.put(map.getKey(),map.getValue());
-            }
-            System.out.println("values "+ map.getValue() );
-        }
+        // System.out.println("time "+ (time2-time1));
     }
 
 }

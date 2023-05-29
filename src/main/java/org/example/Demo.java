@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Demo {
     public static void main(String[] args) throws InterruptedException {
         long size1=System.currentTimeMillis();
-        String filePath = "/home/khushalkothari/smalldummy.txt";
+        String filePath = "/home/khushalkothari/demo.txt";
         Map<String,Integer> uniqueWords = new ConcurrentHashMap<>();
 
         StringBuilder content = new StringBuilder();

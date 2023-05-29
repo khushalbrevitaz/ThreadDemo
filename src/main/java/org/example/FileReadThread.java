@@ -1,23 +1,25 @@
 package org.example;
 
+import java.util.HashMap;
 import java.util.Map;
 
-class FileReadThread implements Runnable {
+class FileReadThread extends Thread {
     private final String filePart;
-    private final Map<String, Integer> uniqueWords;
+    private   Map<String, Integer> uniqueWords;
 
-    public FileReadThread(String filePart, Map<String, Integer> uniqueWords) {
+    public FileReadThread(String filePart,Map<String,Integer> uniqueWords) {
         this.filePart = filePart;
-        this.uniqueWords = uniqueWords;
+       this.uniqueWords = uniqueWords;
     }
 
     @Override
     public void run() {
         long threadStartTime = System.currentTimeMillis();
         int i = 0;
-        String threadName = "thread : " + i;
+//        String threadName = "thread : " + i;
         i++;
         String[] words = filePart.split(" "); // Split by non-word characters
+
         for (String word : words) {
             if (uniqueWords.containsKey(word)) {
                 int size = uniqueWords.get(word);
@@ -28,5 +30,8 @@ class FileReadThread implements Runnable {
         }
         long threadEndTime = System.currentTimeMillis();
         System.out.println("threadName :" + "  " + (threadEndTime - threadStartTime));
+    }
+    public  Map<String,Integer> getMap(){
+        return uniqueWords;
     }
 }

@@ -3,11 +3,10 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Demo {
+public class BySingleThread {
     public static void main(String[] args) throws InterruptedException {
         long size1=System.currentTimeMillis();
         String filePath = "/home/khushalkothari/demo.txt";

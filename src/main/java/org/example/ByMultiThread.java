@@ -4,18 +4,17 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Demo2 {
+public class ByMultiThread {
     public static void main(String[] args) throws InterruptedException {
         long time1= System.currentTimeMillis();
         int size=4;
         String filePath = "/home/khushalkothari/demo.txt";
         // String filePath = "/home/khushalkothari/dummyData";
 
-        StringBuilder content = new StringBuilder();
+        StringBuffer content = new StringBuffer();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

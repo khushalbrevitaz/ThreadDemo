@@ -14,11 +14,13 @@ class FileReadThread extends Thread {
 
     @Override
     public void run() {
+
         long threadStartTime = System.currentTimeMillis();
         int i = 0;
 //        String threadName = "thread : " + i;
         i++;
-        String[] words = filePart.split(" "); // Split by non-word characters
+        String[] words = filePart.split("[ .,]"); // Split by non-word characters
+
 
         for (String word : words) {
             if (uniqueWords.containsKey(word)) {
@@ -29,7 +31,7 @@ class FileReadThread extends Thread {
             }
         }
         long threadEndTime = System.currentTimeMillis();
-        System.out.println("threadName :" + "  " + (threadEndTime - threadStartTime));
+        System.out.println("threadTime :" + "  " + (threadEndTime - threadStartTime));
     }
     public  Map<String,Integer> getMap(){
         return uniqueWords;
